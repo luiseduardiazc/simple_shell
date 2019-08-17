@@ -12,6 +12,20 @@ int to_cd(char *path)
 {
 	return (chdir(path));
 }
+
+char *tok_path(char *token)
+{
+	char *string = "/bin/", *realPoint;
+	int res, n = 5;
+
+	res = _strncmp(token, string, n);
+	if (res == 0)
+		realPoint = token;
+	else
+		realPoint = str_concat(token, string);
+	return (realPoint);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	pid_t child;
@@ -31,7 +45,7 @@ int main(int argc, char *argv[], char *envp[])
 		token = strtok(input, " \t\n\r");
 		for (i = 0; i < strlen(*command) && token != NULL; i++)
 		{
-			command[i] = token;
+			command[i] = tok_path(token);
 			token = strtok(NULL, " \t\n\r");
 		}
 		command[i] = NULL;
