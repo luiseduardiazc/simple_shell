@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "holberton.h"
 #define BUFERSIZE 50
 
 int to_cd(char *path)
@@ -15,14 +15,21 @@ int to_cd(char *path)
 
 char *tok_path(char *token)
 {
-	char *string = "/bin/", *realPoint;
+	char *string, *realPoint;
 	int res, n = 5;
 
+	string = malloc(sizeof(char) * 50);
+	if (!string)
+		return (NULL);
+	_strcpy(string, "/bin/");
 	res = _strncmp(token, string, n);
 	if (res == 0)
 		realPoint = token;
 	else
-		realPoint = str_concat(token, string);
+	{
+		_strcat(string, token);
+		return (string);
+	}
 	return (realPoint);
 }
 
@@ -45,7 +52,7 @@ int main(int argc, char *argv[], char *envp[])
 		token = strtok(input, " \t\n\r");
 		for (i = 0; i < strlen(*command) && token != NULL; i++)
 		{
-			command[i] = tok_path(token);
+			command[i] = token;
 			token = strtok(NULL, " \t\n\r");
 		}
 		command[i] = NULL;
