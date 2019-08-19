@@ -33,13 +33,28 @@ char *tok_path(char *token)
 	return (realPoint);
 }
 
-int main(int argc, char *argv[], char *envp[])
+void split_input(char *command[], char *input)
+{
+	char *token;
+	int i;
+
+	token = strtok(input, " \t\n\r");
+	command[0] = tok_path(token);
+	for (i = 1; i < strlen(*command) && token != NULL; i++)
+	{
+		token = strtok(NULL, " \t\n\r");
+		command[i] = token;
+	}
+	command[i] = NULL;
+}
+
+int loop(char *argv[], char *envp[])
 {
 	pid_t child;
 	char *command[BUFERSIZE], *token, *input = NULL;
-	size_t i, size;
+	size_t size;
 	int status;
-	(void)envp;
+
 	while (1)
 	{
 		printf(":) ");
@@ -49,14 +64,8 @@ int main(int argc, char *argv[], char *envp[])
 		if (strcmp(input, "exit\n") == 0)
 			exit(EXIT_SUCCESS);
 
-		token = strtok(input, " \t\n\r");
-		command[0] = tok_path(token);
-		for (i = 1; i < strlen(*command) && token != NULL; i++)
-		{
-			token = strtok(NULL, " \t\n\r");
-			command[i] = token;
-		}
-		command[i] = NULL;
+		split_input(command, input);
+
 		if (strcmp(command[0], "/bin/cd") == 0)
 		{
 			if (to_cd(command[1]) < 0)
@@ -78,5 +87,12 @@ int main(int argc, char *argv[], char *envp[])
 			waitpid(child, &status, WUNTRACED);
 	}
 	free(input);
+	return (status);
+}
+int main(int argc, char *argv[], char *envp[])
+{
+	int status;
+	(void)envp;
+	status = loop(argv, envp);
 	exit(status);
 }
