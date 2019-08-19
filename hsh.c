@@ -8,11 +8,25 @@
 #include "holberton.h"
 #define BUFERSIZE 50
 
+/**
+  * to_cd - invoke cd command
+  * @path: The path
+  *
+  * Return: A integer.
+  * On error, retunr NULL.
+  */
 int to_cd(char *path)
 {
 	return (chdir(path));
 }
 
+/**
+  * tok_path - Concatenate the input with the path
+  * @token: The token passed
+  *
+  * Return: A pointer.
+  * On error, retunr NULL.
+  */
 char *tok_path(char *token)
 {
 	char *string, *realPoint;
@@ -33,6 +47,14 @@ char *tok_path(char *token)
 	return (realPoint);
 }
 
+/**
+  * split_input - Split the input
+  * @command: The array that has the commands
+  * @input: The input obtained from getline
+  *
+  * Return: nothing
+  * On error, retunr NULL.
+  */
 void split_input(char *command[], char *input)
 {
 	char *token;
@@ -48,19 +70,29 @@ void split_input(char *command[], char *input)
 	command[i] = NULL;
 }
 
+/**
+ * loop - loop for the prompt
+ * @argv: Array of pointers to parameters
+ * @envp: Enviroment variables
+ *
+ * Return: An integer
+ * On error, -1 is returned, and errno is set appropriately.
+*/
 int loop(char *argv[], char *envp[])
 {
 	pid_t child;
 	char *command[BUFERSIZE], *token, *input = NULL;
 	size_t size;
-	int status;
+	int status, line;
 
 	while (1)
 	{
 		printf(":) ");
-		getline(&input, &size, stdin);
+		line = getline(&input, &size, stdin);
 		/* printf("input %s\n", input); */
 
+		if (line == -1 && line == EOF)
+			break;
 		if (strcmp(input, "exit\n") == 0)
 			exit(EXIT_SUCCESS);
 
@@ -89,6 +121,16 @@ int loop(char *argv[], char *envp[])
 	free(input);
 	return (status);
 }
+
+/**
+ * main - entry point
+ * @argv: Array of pointers to parameters
+ * @argc: count of parameters
+ * @envp: Enviroment variables
+ *
+ * Return: OStatus
+ * On error, -1 is returned, and errno is set appropriately.
+*/
 int main(int argc, char *argv[], char *envp[])
 {
 	int status;
