@@ -70,7 +70,7 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (execve(command[0], command, NULL))
 			{
-				perror("execve");
+				perror(argv[0]);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -78,6 +78,5 @@ int main(int argc, char *argv[], char *envp[])
 			waitpid(child, &status, WUNTRACED);
 	}
 	free(input);
-	putchar('\n');
 	exit(status);
 }
