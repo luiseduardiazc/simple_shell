@@ -50,13 +50,14 @@ int main(int argc, char *argv[], char *envp[])
 			exit(EXIT_SUCCESS);
 
 		token = strtok(input, " \t\n\r");
-		for (i = 0; i < strlen(*command) && token != NULL; i++)
+		command[0] = tok_path(token);
+		for (i = 1; i < strlen(*command) && token != NULL; i++)
 		{
-			command[i] = token;
 			token = strtok(NULL, " \t\n\r");
+			command[i] = token;
 		}
 		command[i] = NULL;
-		if (strcmp(command[0], "cd") == 0)
+		if (strcmp(command[0], "/bin/cd") == 0)
 		{
 			if (to_cd(command[1]) < 0)
 			{
