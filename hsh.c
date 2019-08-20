@@ -5,37 +5,106 @@
 #include <string.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "holberton.h"
 #define BUFERSIZE 50
+#define print_prompt write(STDIN_FILENO, "(: ", 3)
 
+/**
+ * to_cd - invoke cd command
+ * @path: The path
+ *
+ * Return: A integer.
+ * On error, retunr NULL.
+ */
 int to_cd(char *path)
 {
 	return (chdir(path));
 }
-int main(int argc, char *argv[], char *envp[])
+
+/**
+ * tok_path - Concatenate the input with the path
+ * @token: The token passed
+ *
+ * Return: A pointer.
+ * On error, retunr NULL.
+ */
+char *tok_path(char *token)
+{
+	char *string, *realPoint;
+	int res, n = 5;
+
+	string = malloc(sizeof(char) * 50);
+	if (!string)
+		return (NULL);
+	_strcpy(string, "/bin/");
+	res = _strncmp(token, string, n);
+	if (res == 0)
+		realPoint = token;
+	else
+	{
+		_strcat(string, token);
+		return (string);
+	}
+	free(string);
+	return (realPoint);
+}
+
+/**
+ * split_input - Split the input
+ * @command: The array that has the commands
+ * @input: The input obtained from getline
+ *
+ * Return: nothing
+ * On error, retunr NULL.
+ */
+void split_input(char *command[], char *input)
+{
+	char *token;
+	int i;
+
+	token = strtok(input, " \t\n\r");
+	command[0] = tok_path(token);
+	for (i = 1; i < _strlen(*command) && token != NULL; i++)
+	{
+		token = strtok(NULL, " \t\n\r");
+		command[i] = token;
+	}
+	command[i] = NULL;
+}
+
+/**
+ * loop - loop for the prompt
+ * @argv: Array of pointers to parameters
+ * @envp: Enviroment variables
+ *
+ * Return: An integer
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int loop(char *argv[], char *envp[])
 {
 	pid_t child;
-	char *command[BUFERSIZE], *token, *input = NULL;
-	size_t i, size;
-	int status;
+	char *command[BUFERSIZE], *input = NULL;
+	size_t line, size = BUFERSIZE;
+	int status, is_interactive_mode;
 	(void)envp;
+
+	is_interactive_mode = isatty(STDIN_FILENO);
+
 	while (1)
 	{
-		printf(":) ");
-		getline(&input, &size, stdin);
-		/* printf("input %s\n", input); */
+		if (is_interactive_mode)
+			print_prompt;
 
+		line = getline(&input, &size, stdin);
+
+		if (line == (size_t)-1 && line == (size_t)EOF)
+			break;
 		if (strcmp(input, "exit\n") == 0)
-			exit(EXIT_SUCCESS);
+			free(input), exit(EXIT_SUCCESS);
 
-		token = strtok(input, " \t\n\r");
-		for (i = 0; i < strlen(*command) && token != NULL; i++)
-		{
-			command[i] = token;
-			token = strtok(NULL, " \t\n\r");
-		}
-		command[i] = NULL;
-		if (strcmp(command[0], "cd") == 0)
+		split_input(command, input);
+
+		if (strcmp(command[0], "/bin/cd") == 0)
 		{
 			if (to_cd(command[1]) < 0)
 			{
@@ -48,14 +117,31 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (execve(command[0], command, NULL))
 			{
-				perror("execve");
-				exit(EXIT_FAILURE);
+				perror(argv[0]);
+				free(input);
+				_exit(EXIT_FAILURE);
 			}
 		}
-		if (child > 0)
-			waitpid(child, &status, WUNTRACED);
+		wait(&status);
 	}
 	free(input);
-	putchar('\n');
+	return (status);
+}
+
+/**
+ * main - entry point
+ * @argv: Array of pointers to parameters
+ * @argc: count of parameters
+ * @envp: Enviroment variables
+ *
+ * Return: OStatus
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int main(int argc, char *argv[], char *envp[])
+{
+	int status;
+	(void)envp;
+	(void)argc;
+	status = loop(argv, envp);
 	exit(status);
 }
