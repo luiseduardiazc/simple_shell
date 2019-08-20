@@ -7,6 +7,7 @@
 #include <string.h>
 #include "holberton.h"
 #define BUFERSIZE 50
+#define print_prompt write(STDIN_FILENO, "(: ", 3)
 
 /**
  * to_cd - invoke cd command
@@ -84,11 +85,14 @@ int loop(char *argv[], char *envp[])
 	pid_t child;
 	char *command[BUFERSIZE], *token, *input = NULL;
 	size_t line, size = BUFERSIZE;
-	int status;
+	int status, is_interactive_mode;
 
-	while (1)
-	{
-		printf(":) ");
+	is_interactive_mode = isatty(STDIN_FILENO);
+
+	do {
+		if (is_interactive_mode)
+			print_prompt;
+
 		line = getline(&input, &size, stdin);
 
 		if (line == -1 && line == EOF)
@@ -117,7 +121,7 @@ int loop(char *argv[], char *envp[])
 			}
 		}
 		wait(&status);
-	}
+	} while (is_interactive_mode);
 	free(input);
 	return (status);
 }
