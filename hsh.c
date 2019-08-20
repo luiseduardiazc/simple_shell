@@ -64,7 +64,7 @@ void split_input(char *command[], char *input)
 
 	token = strtok(input, " \t\n\r");
 	command[0] = tok_path(token);
-	for (i = 1; i < strlen(*command) && token != NULL; i++)
+	for (i = 1; i < _strlen(*command) && token != NULL; i++)
 	{
 		token = strtok(NULL, " \t\n\r");
 		command[i] = token;
@@ -83,19 +83,21 @@ void split_input(char *command[], char *input)
 int loop(char *argv[], char *envp[])
 {
 	pid_t child;
-	char *command[BUFERSIZE], *token, *input = NULL;
+	char *command[BUFERSIZE], *input = NULL;
 	size_t line, size = BUFERSIZE;
 	int status, is_interactive_mode;
+	(void)envp;
 
 	is_interactive_mode = isatty(STDIN_FILENO);
 
-	do {
+	while (1)
+	{
 		if (is_interactive_mode)
 			print_prompt;
 
 		line = getline(&input, &size, stdin);
 
-		if (line == -1 && line == EOF)
+		if (line == (size_t)-1 && line == (size_t)EOF)
 			break;
 		if (strcmp(input, "exit\n") == 0)
 			free(input), exit(EXIT_SUCCESS);
@@ -121,7 +123,7 @@ int loop(char *argv[], char *envp[])
 			}
 		}
 		wait(&status);
-	} while (is_interactive_mode);
+	}
 	free(input);
 	return (status);
 }
@@ -139,6 +141,7 @@ int main(int argc, char *argv[], char *envp[])
 {
 	int status;
 	(void)envp;
+	(void)argc;
 	status = loop(argv, envp);
 	exit(status);
 }
