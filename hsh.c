@@ -85,7 +85,7 @@ int loop(char *argv[], char *envp[])
 	pid_t child;
 	char *command[BUFERSIZE], *input = NULL;
 	size_t line, size = BUFERSIZE;
-	int status, is_interactive_mode;
+	int status, is_interactive_mode, i;
 	(void)envp;
 
 	is_interactive_mode = isatty(STDIN_FILENO);
@@ -124,6 +124,9 @@ int loop(char *argv[], char *envp[])
 		}
 		wait(&status);
 	}
+	for (i = 0; command[i] != '\0'; i++)
+		free(command[i]);
+	printf("%s\n", *command);
 	free(input);
 	return (status);
 }
