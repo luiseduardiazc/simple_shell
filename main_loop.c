@@ -12,6 +12,13 @@ void _print_prompt(int is_interactive_mode)
 		print_prompt;
 
 }
+void _free(char *command[])
+{
+	int i;
+
+	for (i = 0; command[i] != '\0'; i++)
+		free(command[i]);
+}
 /**
  * loop - loop for the prompt
  * @argv: Array of pointers to parameters
@@ -25,7 +32,7 @@ int loop(char *argv[], char *envp[])
 	pid_t child;
 	char *command[BUFERSIZE], *input = NULL;
 	size_t line, size = BUFERSIZE;
-	int status, is_interactive_mode;
+	int status, is_interactive_mode, flg = 0;
 	(void)envp;
 
 	is_interactive_mode = isatty(STDIN_FILENO);
@@ -40,7 +47,7 @@ int loop(char *argv[], char *envp[])
 		if (_strcmp(input, "exit\n") == 0)
 			free(input), exit(EXIT_SUCCESS);
 
-		split_input(command, input);
+		split_input(command, input, &flg);
 		if (command[0] != NULL)
 		{
 			if (_strcmp(command[0], "/bin/cd") == 0)
@@ -56,6 +63,8 @@ int loop(char *argv[], char *envp[])
 		if (child == 0)
 			_exeve(command, argv, input);
 		wait(&status);
+		if (flg == 1)
+			free(command[0]);
 	}
 	free(input);
 	return (status);

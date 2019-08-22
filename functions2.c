@@ -18,25 +18,28 @@ int to_cd(char *path)
  * Return: A pointer.
  * On error, retunr NULL.
  */
-char *tok_path(char *token)
+char *tok_path(char *token, int *flg)
 {
-	char *string, *realPoint;
+	char *string;
 	int res, n = 5;
 
 	string = malloc(sizeof(char) * 50);
 	if (!string)
 		return (NULL);
 	_strcpy(string, "/bin/");
-	res = _strncmp(token, string, n);
+	res = _strncmp(token, "/bin/", n);
 	if (res == 0)
-		realPoint = token;
+	{
+		*flg = 0;
+		free(string);
+		return (token);
+	}
 	else
 	{
+		*flg = 1;
 		_strcat(string, token);
 		return (string);
 	}
-	free(string);
-	return (realPoint);
 }
 
 /**
@@ -47,17 +50,17 @@ char *tok_path(char *token)
  * Return: nothing
  * On error, retunr NULL.
  */
-void split_input(char *command[], char *input)
+void split_input(char *command[], char *input, int *flg)
 {
 	char *token;
 	int i;
 
 	token = strtok(input, delim);
-	for (i = 0; i < BUFERSIZE && token != NULL; i++)
+	for (i = 0; token != NULL; i++)
 	{
 		if (i == 0)
 		{
-			command[i] = tok_path(token);
+			command[i] = tok_path(token, flg);
 		} else
 		{
 			command[i] = token;

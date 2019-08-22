@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFERSIZE 4052
-#define delim " \t\n\r"
+#define delim " \t\n\r\a"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
 /* functions0.c functions1.c */
 int _strlen(char *s);
@@ -23,8 +23,8 @@ int _strncmp(char *s1, char *s2, int n);
 
 /* functions2.c */
 int to_cd(char *path);
-char *tok_path(char *token);
-void split_input(char *command[], char *input);
+char *tok_path(char *token, int *flg);
+void split_input(char *command[], char *input, int *flg);
 void _exeve(char *command[], char *argv[], char *input);
 /* main_loop.c */
 int loop(char *argv[], char *envp[]);
