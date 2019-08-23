@@ -5,7 +5,7 @@
  *
  * Return: Nothing.
  * None Error
-*/
+ */
 void _print_prompt(int is_interactive_mode)
 {
 	if (is_interactive_mode)
@@ -20,13 +20,11 @@ void _print_prompt(int is_interactive_mode)
  * Return: An integer
  * On error, -1 is returned, and errno is set appropriately.
  */
-int loop(char *argv[], char *envp[])
+int loop(struct_v *stru_v)
 {
 	pid_t child;
-	char *command[BUFERSIZE], *input = NULL;
 	size_t line, size = BUFERSIZE;
-	int status, is_interactive_mode;
-	(void)envp;
+	int status = 0, is_interactive_mode;
 
 	is_interactive_mode = isatty(STDIN_FILENO);
 
@@ -34,29 +32,31 @@ int loop(char *argv[], char *envp[])
 	{
 		_print_prompt(is_interactive_mode);
 
-		line = getline(&input, &size, stdin);
+		line = getline(&stru_v->input, &size, stdin);
 		if (line == (size_t)-1 && line == (size_t)EOF)
 			break;
-		if (_strcmp(input, "exit\n") == 0)
-			free(input), exit(EXIT_SUCCESS);
+		if (_strcmp(stru_v->input, "exit\n") == 0)
+			break;
 
-		split_input(command, input);
-		if (command[0] != NULL)
+		if (_strcmp(stru_v->input, "\n") == 0)
+                        continue;
+
+		split_input(stru_v);
+		if (stru_v->command[0] != NULL)
 		{
-			if (_strcmp(command[0], "/bin/cd") == 0)
+			if (_strcmp(stru_v->command[0], "/bin/cd") == 0)
 			{
-				if (to_cd(command[1]) < 0)
+				if (to_cd(stru_v->command[1]) < 0)
 				{
-					perror(command[1]);
+					perror(stru_v->command[1]);
 				}
 				continue;
 			}
 		}
 		child = fork();
 		if (child == 0)
-			_exeve(command, argv, input);
+			_exeve(stru_v);
 		wait(&status);
 	}
-	free(input);
 	return (status);
 }

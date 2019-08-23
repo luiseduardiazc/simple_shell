@@ -10,6 +10,17 @@
 #define BUFERSIZE 4052
 #define delim " \t\n\r"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
+
+typedef struct struct_s
+{
+	char *string;
+	char *input;
+	char *token;
+	char **command;
+	char **argv;
+	char **envp;
+} struct_v;
+
 /* functions0.c functions1.c */
 int _strlen(char *s);
 char *str_concat(char *s1, char *s2);
@@ -23,10 +34,10 @@ int _strncmp(char *s1, char *s2, int n);
 
 /* functions2.c */
 int to_cd(char *path);
-char *tok_path(char *token);
-void split_input(char *command[], char *input);
-void _exeve(char *command[], char *argv[], char *input);
+void tok_path(struct_v *stru_v);
+void split_input(struct_v *stru_v);
+void _exeve(struct_v *stru_v);
 /* main_loop.c */
-int loop(char *argv[], char *envp[]);
+int loop(struct_v *stru_v);
 
 #endif

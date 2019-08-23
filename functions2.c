@@ -18,27 +18,17 @@ int to_cd(char *path)
  * Return: A pointer.
  * On error, retunr NULL.
  */
-char *tok_path(char *token)
+void tok_path(struct_v *stru_v)
 {
-	char *string, *realPoint;
 	int res, n = 5;
-
-	string = malloc(sizeof(char) * 50);
-	if (!string)
-		return (NULL);
-	_strcpy(string, "/bin/");
-	res = _strncmp(token, string, n);
-	if (res == 0)
-		realPoint = token;
-	else
+	_strcpy(stru_v->string, "/bin/");
+	res = _strncmp(stru_v->token, stru_v->string, n);
+	if (res != 0)
 	{
-		_strcat(string, token);
-		return (string);
+		_strcat(stru_v->string, stru_v->token);
+		stru_v->token = stru_v->string;
 	}
-	free(string);
-	return (realPoint);
 }
-
 /**
  * split_input - Split the input
  * @command: The array that has the commands
@@ -47,24 +37,30 @@ char *tok_path(char *token)
  * Return: nothing
  * On error, retunr NULL.
  */
-void split_input(char *command[], char *input)
+void split_input(struct_v *stru_v)
 {
-	char *token;
 	int i;
 
-	token = strtok(input, delim);
-	for (i = 0; i < BUFERSIZE && token != NULL; i++)
+	stru_v->token = strtok(stru_v->input, delim);
+	for (i = 0; i < BUFERSIZE && stru_v->token != NULL; i++)
 	{
 		if (i == 0)
 		{
-			command[i] = tok_path(token);
+			tok_path(stru_v);
+			stru_v->command[i] = stru_v->token;
 		} else
 		{
-			command[i] = token;
+			/* 
+			   if (i == 1)
+			   {
+			   stru_v->token = stru_v->token + 2;
+			   }
+			 */
+			stru_v->command[i] = stru_v->token;
 		}
-		token = strtok(NULL, delim);
+		stru_v->token = strtok(NULL, delim);
 	}
-	command[i] = NULL;
+	stru_v->command[i] = NULL;
 }
 /**
  * _exeve - execute comands
@@ -74,20 +70,16 @@ void split_input(char *command[], char *input)
  * Return: Nothing
  * On error EXIT_FAILURE
  */
-void _exeve(char *command[], char *argv[], char *input)
+void _exeve(struct_v *stru_v)
 {
-	if (command[0] == NULL)
+	if (stru_v->command[0] == NULL)
 	{
-		free(input);
-		free(*command);
 		_exit(EXIT_SUCCESS);
 	}
 
-	if (execve(command[0], command, NULL))
+	if (execve(stru_v->command[0], stru_v->command, NULL))
 	{
-		perror(argv[0]);
-		free(input);
+		perror(stru_v->argv[0]);
 		_exit(EXIT_FAILURE);
 	}
 }
-
