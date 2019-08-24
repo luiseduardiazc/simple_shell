@@ -52,3 +52,36 @@ size_t _strcspn(const char *s1, const char *s2)
 	}
 	return (ret);
 }
+
+/**
+ * _strtok_r - function is a reentrant version strtok()
+ * @s: The string to split
+ * @delim: The string to delimit s
+ * @context: The saveptr argument
+ * Return: functions return a pointer to the next token or NULL
+ */
+
+char *_strtok_r(char *s, char *delim, char **context)
+{
+	char *token = NULL;
+
+	if (s == NULL)
+		s = *context;
+
+	/* skip initial delimiters */
+	s += strspn(s, delim);
+	if (*s != '\0')
+	{
+		/* we have a token */
+		token = s;
+		/* skip the token */
+		s += _strcspn(s, delim);
+		if (*s != '\0')
+		{
+			/* cut the string to terminate the token */
+			*s++ = '\0';
+		}
+	}
+	*context = s;
+	return (token);
+}

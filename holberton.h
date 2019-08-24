@@ -45,7 +45,7 @@ void _exeve(struct_v *stru_v);
 size_t _strspn(const char *s1, const char *s2);
 char *_strrchr(char *s, int c);
 size_t _strcspn(const char *s1, const char *s2);
-
+char *_strtok_r(char *s, char *delim, char **context);
 /* main_loop.c */
 int loop(struct_v *stru_v);
 
