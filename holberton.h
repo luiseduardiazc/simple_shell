@@ -41,6 +41,9 @@ int to_cd(char *path);
 void tok_path(struct_v *stru_v);
 void split_input(struct_v *stru_v);
 void _exeve(struct_v *stru_v);
+/* functions for _strtok */
+size_t _strspn(const char *s1, const char *s2);
+
 /* main_loop.c */
 int loop(struct_v *stru_v);
 
