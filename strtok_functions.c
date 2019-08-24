@@ -30,3 +30,25 @@ char *_strrchr(char *s, int c)
 	} while (*s++);
 	return (ret);
 }
+
+/**
+ * _strcspn - function computes the length of the maximum initial segment
+ * @s1: The string to compare
+ * @s2: The string to compare
+ *
+ * Return: function returns the length of the segment.
+ */
+
+size_t _strcspn(const char *s1, const char *s2)
+{
+	size_t ret = 0;
+
+	while (*s1)
+	{
+		if (strchr(s2, *s1))
+			return (ret);
+
+		s1++, ret++;
+	}
+	return (ret);
+}
