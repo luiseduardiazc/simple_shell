@@ -42,17 +42,17 @@ void tok_path(struct_v *stru_v)
 
 	stru_v->accs_fail = 0;
 	return_path(stru_v);
-	stru_v->token_path = strtok(stru_v->path, ":");
+	stru_v->token_path = strtok(stru_v->path, delim2);
 	while (stru_v->token_path != NULL)
 	{
 		comp = _strncmp(stru_v->token, stru_v->token_path, _strlen(stru_v->token_path));
 		if (comp != 0)
 		{
-			_strcat(stru_v->token_path, "/");
-			_strcat(stru_v->token_path, stru_v->token);
-			if (_access(stru_v->token_path) == 0)
+			stru_v->string = _strdup(stru_v->token_path);
+			_strcat(stru_v->string, "/");
+			_strcat(stru_v->string, stru_v->token);
+			if (_access(stru_v->string) == 0)
 			{
-				stru_v->token = stru_v->token_path;
 				stru_v->accs_fail = 1;
 				break;
 			}
@@ -65,7 +65,7 @@ void tok_path(struct_v *stru_v)
 				break;
 			}
 		}
-		stru_v->token_path = strtok(NULL, ":");
+		stru_v->token_path = strtok(NULL, delim2);
 	}
 	if (stru_v->accs_fail == 0)
 		stru_v->token = NULL;
@@ -88,7 +88,7 @@ void split_input(struct_v *stru_v)
 		if (i == 0)
 		{
 			tok_path(stru_v);
-			stru_v->command[i] = stru_v->token;
+			stru_v->command[i] = stru_v->string;
 		} else
 		{
 			stru_v->command[i] = stru_v->token;

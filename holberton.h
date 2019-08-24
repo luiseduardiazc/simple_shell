@@ -9,11 +9,13 @@
 #include <string.h>
 #define BUFERSIZE 4052
 #define delim " \t\n\r"
+#define delim2 ":"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
 
 typedef struct struct_s
 {
 	int accs_fail;
+	char *string;
 	char *input;
 	char *token;
 	char *path;
