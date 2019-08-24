@@ -39,10 +39,11 @@ int _access(char *s)
 void tok_path(struct_v *stru_v)
 {
 	int comp;
+	char *save_ptr = NULL;
 
 	stru_v->accs_fail = 0;
 	return_path(stru_v);
-	stru_v->token_path = strtok(stru_v->path, delim2);
+	stru_v->token_path = _strtok_r(stru_v->path, delim2,&save_ptr);
 	while (stru_v->token_path != NULL)
 	{
 		comp = _strncmp(stru_v->token, stru_v->token_path, _strlen(stru_v->token_path));
@@ -65,7 +66,7 @@ void tok_path(struct_v *stru_v)
 				break;
 			}
 		}
-		stru_v->token_path = strtok(NULL, delim2);
+		stru_v->token_path = _strtok_r(NULL, delim2, &save_ptr);
 	}
 	if (stru_v->accs_fail == 0)
 		stru_v->token = NULL;
