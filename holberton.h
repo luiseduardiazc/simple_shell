@@ -13,9 +13,11 @@
 
 typedef struct struct_s
 {
-	char *string;
+	int accs_fail;
 	char *input;
 	char *token;
+	char *path;
+	char *token_path;
 	char **command;
 	char **argv;
 	char **envp;
