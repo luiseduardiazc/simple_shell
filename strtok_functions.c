@@ -9,7 +9,7 @@ size_t _strspn(const char *s1, const char *s2)
 {
 	size_t ret = 0;
 
-	while (*s1 && strchr(s2, *s1++))
+	while (*s1 && _strchr(s2, *s1++))
 		ret++;
 	return (ret);
 }
@@ -45,7 +45,7 @@ size_t _strcspn(const char *s1, const char *s2)
 
 	while (*s1)
 	{
-		if (strchr(s2, *s1))
+		if (_strchr(s2, *s1))
 			return (ret);
 
 		s1++, ret++;
@@ -53,6 +53,20 @@ size_t _strcspn(const char *s1, const char *s2)
 	return (ret);
 }
 
+/**
+ * _strchr - function locates the ﬁrst occurrence of c
+ * @s: The string to compare
+ * @c: character to find
+ *
+ * Return: function returns a pointer to the located character
+ */
+char *_strchr(const char *s, int c)
+{
+	while (*s != (char)c)
+		if (!*s++)
+			return (0);
+	return ((char *)s);
+}
 /**
  * _strtok_r - function is a reentrant version strtok()
  * @s: The string to split
@@ -69,7 +83,7 @@ char *_strtok_r(char *s, char *delim, char **context)
 		s = *context;
 
 	/* skip initial delimiters */
-	s += strspn(s, delim);
+	s += _strspn(s, delim);
 	if (*s != '\0')
 	{
 		/* we have a token */
