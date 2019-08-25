@@ -40,12 +40,10 @@ void tok_path(struct_v *stru_v)
 {
 	int comp;
 	char *ptr_safe_strtok;
-	char *path_copy;
+	char path_copy[1024];
 
 	stru_v->accs_fail = 0;
 	return_path(stru_v);
-
-	path_copy = malloc (sizeof(char) * _strlen(stru_v->path));
 
 	_strcpy(path_copy, stru_v->path);
 	stru_v->token_path = _strtok_r(path_copy, delim2, &ptr_safe_strtok);
@@ -75,7 +73,6 @@ void tok_path(struct_v *stru_v)
 
 		stru_v->token_path = _strtok_r(NULL, delim2, &ptr_safe_strtok);
 	}
-	free(path_copy);
 }
 /**
  * split_input - Split the input
