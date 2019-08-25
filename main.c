@@ -34,7 +34,7 @@ void init_structure(struct_v *stru_v, char *argv[], char *envp[])
 	stru_v->envp = envp;
 	stru_v->input = NULL;
 	stru_v->token = NULL;
-	stru_v->string = NULL;
+	stru_v->string = alloc_memory_property(stru_v->string);
 	stru_v->token_path = NULL;
 	stru_v->path = NULL;
 	stru_v->command = malloc(sizeof(char **) * 10);
@@ -47,8 +47,6 @@ void _free(struct_v *stru_v)
         free(stru_v->input);
         free(stru_v->token);
 	free(stru_v->string);
-	free(stru_v->token_path);
-	free(stru_v->path);
 	free(stru_v);
 }
 /**
@@ -69,7 +67,6 @@ int main(int argc, char *argv[], char *envp[])
 	stru_v = alloc_memory_struct();
 	init_structure(stru_v, argv, envp);
 	status = loop(stru_v);
-	printf("bye");
 	_free(stru_v);
 	exit(status);
 }

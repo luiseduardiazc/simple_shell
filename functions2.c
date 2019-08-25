@@ -39,16 +39,23 @@ int _access(char *s)
 void tok_path(struct_v *stru_v)
 {
 	int comp;
+	char *ptr_safe_strtok;
+	char *path_copy;
 
 	stru_v->accs_fail = 0;
 	return_path(stru_v);
-	stru_v->token_path = strtok(stru_v->path, delim2);
+
+	path_copy = malloc (sizeof(char) * _strlen(stru_v->path));
+
+	_strcpy(path_copy, stru_v->path);
+	stru_v->token_path = _strtok_r(path_copy, delim2, &ptr_safe_strtok);
+
 	while (stru_v->token_path != NULL)
 	{
 		comp = _strncmp(stru_v->token, stru_v->token_path, _strlen(stru_v->token_path));
 		if (comp != 0)
 		{
-			stru_v->string = _strdup(stru_v->token_path);
+			strcpy(stru_v->string, stru_v->token_path);
 			_strcat(stru_v->string, "/");
 			_strcat(stru_v->string, stru_v->token);
 			if (_access(stru_v->string) == 0)
@@ -65,10 +72,9 @@ void tok_path(struct_v *stru_v)
 				break;
 			}
 		}
-		stru_v->token_path = strtok(NULL, delim2);
+		stru_v->token_path = _strtok_r(NULL, delim2, &ptr_safe_strtok);
 	}
-	if (stru_v->accs_fail == 0)
-		stru_v->token = NULL;
+	free(path_copy);
 }
 /**
  * split_input - Split the input
@@ -82,7 +88,7 @@ void split_input(struct_v *stru_v)
 {
 	int i;
 
-	stru_v->token = strtok(stru_v->input, delim);
+	stru_v->token = strtok(stru_v->input, delimiter);
 	for (i = 0; i < BUFERSIZE && stru_v->token != NULL; i++)
 	{
 		if (i == 0)
@@ -93,7 +99,7 @@ void split_input(struct_v *stru_v)
 		{
 			stru_v->command[i] = stru_v->token;
 		}
-		stru_v->token = strtok(NULL, delim);
+		stru_v->token = strtok(NULL, delimiter);
 	}
 	stru_v->command[i] = NULL;
 }

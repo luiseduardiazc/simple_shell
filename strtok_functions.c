@@ -1,3 +1,4 @@
+#include "holberton.h"
 /**
  * _strspn - function computes the length of the maximum initial segment
  * @s1: The string to compare
@@ -5,9 +6,9 @@
  *
  * Return: The strspn() function returns the length of the segment.
  */
-size_t _strspn(const char *s1, const char *s2)
+int _strspn(const char *s1, const char *s2)
 {
-	size_t ret = 0;
+	int ret = 0;
 
 	while (*s1 && _strchr(s2, *s1++))
 		ret++;
@@ -39,9 +40,9 @@ char *_strrchr(char *s, int c)
  * Return: function returns the length of the segment.
  */
 
-size_t _strcspn(const char *s1, const char *s2)
+int _strcspn(const char *s1, const char *s2)
 {
-	size_t ret = 0;
+	int ret = 0;
 
 	while (*s1)
 	{

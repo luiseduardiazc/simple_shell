@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFERSIZE 4052
-#define delim " \t\n\r"
+#define delimiter " \t\n\r"
 #define delim2 ":"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
 
@@ -42,10 +42,10 @@ void tok_path(struct_v *stru_v);
 void split_input(struct_v *stru_v);
 void _exeve(struct_v *stru_v);
 /* functions for _strtok */
-size_t _strspn(const char *s1, const char *s2);
+int _strspn(const char *s1, const char *s2);
 char *_strrchr(char *s, int c);
-size_t _strcspn(const char *s1, const char *s2);
-char *strchr(const char *s, int c);
+int _strcspn(const char *s1, const char *s2);
+char *_strchr(const char *s, int c);
 char *_strtok_r(char *s, char *delim, char **context);
 /* main_loop.c */
 int loop(struct_v *stru_v);
