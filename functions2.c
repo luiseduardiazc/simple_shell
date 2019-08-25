@@ -72,7 +72,11 @@ void tok_path(struct_v *stru_v)
 				break;
 			}
 		}
+<<<<<<< HEAD
 		stru_v->token_path = _strtok_r(NULL, delim2, &ptr_safe_strtok);
+=======
+		stru_v->token_path = _strtok_r(NULL, delim2, &save_ptr);
+>>>>>>> 513fc232124e7ab027aadccf80b82ceb2ac5df3f
 	}
 	free(path_copy);
 }

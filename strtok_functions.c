@@ -10,7 +10,7 @@ int _strspn(const char *s1, const char *s2)
 {
 	int ret = 0;
 
-	while (*s1 && _strchr(s2, *s1++))
+	while (*s1 && strchr(s2, *s1++))
 		ret++;
 	return (ret);
 }
@@ -46,7 +46,7 @@ int _strcspn(const char *s1, const char *s2)
 
 	while (*s1)
 	{
-		if (_strchr(s2, *s1))
+		if (strchr(s2, *s1))
 			return (ret);
 
 		s1++, ret++;
@@ -76,7 +76,7 @@ char *_strchr(const char *s, int c)
  * Return: functions return a pointer to the next token or NULL
  */
 
-char *_strtok_r(char *s, char *delim, char **context)
+char *_strtok_r(char *s, char *delimi, char **context)
 {
 	char *token = NULL;
 
@@ -84,13 +84,13 @@ char *_strtok_r(char *s, char *delim, char **context)
 		s = *context;
 
 	/* skip initial delimiters */
-	s += _strspn(s, delim);
+	s += _strspn(s, delimi);
 	if (*s != '\0')
 	{
 		/* we have a token */
 		token = s;
 		/* skip the token */
-		s += _strcspn(s, delim);
+		s += _strcspn(s, delimi);
 		if (*s != '\0')
 		{
 			/* cut the string to terminate the token */
