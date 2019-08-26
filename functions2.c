@@ -58,6 +58,7 @@ void tok_path(struct_v *stru_v)
 			_strcat(stru_v->string, stru_v->token);
 			if (_access(stru_v->string) == 0)
 			{
+				stru_v->token = stru_v->string;
 				stru_v->accs_fail = 1;
 				break;
 			}
@@ -92,7 +93,7 @@ void split_input(struct_v *stru_v)
 		if (i == 0)
 		{
 			tok_path(stru_v);
-			stru_v->command[i] = stru_v->string;
+			stru_v->command[i] = stru_v->token;
 		} else
 		{
 			stru_v->command[i] = stru_v->token;
