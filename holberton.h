@@ -8,8 +8,23 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFERSIZE 4052
-#define delim " \t\n\r"
+#define delimiter " \t\n\r"
+#define delim2 ":"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
+
+typedef struct struct_s
+{
+	int accs_fail;
+	char *string;
+	char *input;
+	char *token;
+	char *path;
+	char *token_path;
+	char **command;
+	char **argv;
+	char **envp;
+} struct_v;
+
 /* functions0.c functions1.c */
 int _strlen(char *s);
 char *str_concat(char *s1, char *s2);
@@ -23,10 +38,16 @@ int _strncmp(char *s1, char *s2, int n);
 
 /* functions2.c */
 int to_cd(char *path);
-char *tok_path(char *token);
-void split_input(char *command[], char *input);
-void _exeve(char *command[], char *argv[], char *input);
+void tok_path(struct_v *stru_v);
+void split_input(struct_v *stru_v);
+void _exeve(struct_v *stru_v);
+/* functions for _strtok */
+int _strspn(const char *s1, const char *s2);
+char *_strrchr(char *s, int c);
+int _strcspn(const char *s1, const char *s2);
+char *_strchr(const char *s, int c);
+char *_strtok_r(char *s, char *delim, char **context);
 /* main_loop.c */
-int loop(char *argv[], char *envp[]);
+int loop(struct_v *stru_v);
 
 #endif
