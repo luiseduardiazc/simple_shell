@@ -122,7 +122,7 @@ void _exeve(struct_v *stru_v)
 		_exit(EXIT_SUCCESS);
 	}
 
-	if (execve(stru_v->command[0], stru_v->command, NULL))
+	if (execve(stru_v->command[0], stru_v->command, stru_v->envp))
 	{
 		perror(stru_v->argv[0]);
 		_exit(EXIT_FAILURE);
