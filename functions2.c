@@ -114,7 +114,6 @@ void _exeve(struct_v *stru_v)
 {
 	if (stru_v->accs_fail == 0)
 	{
-		printf("Error no encotnró path");
 		_exit(EXIT_SUCCESS);
 	}
 	if (stru_v->command[0] == NULL)

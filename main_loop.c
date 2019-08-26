@@ -12,6 +12,16 @@ void _print_prompt(int is_interactive_mode)
 		print_prompt;
 
 }
+void command_not_found(struct_v *stru_v)
+{
+	char error[1024];
+
+	_strcpy(error, stru_v->argv[0]);
+	_strcat(error, ": 1: ");
+	_strcat(error, stru_v->input);
+	_strcat(error, ": not found\n");    
+	write(STDOUT_FILENO, error, _strlen(error));
+}
 /**
  * loop - loop for the prompt
  * @argv: Array of pointers to parameters
@@ -39,7 +49,7 @@ int loop(struct_v *stru_v)
 			break;
 
 		if (_strcmp(stru_v->input, "\n") == 0)
-                        continue;
+			continue;
 
 		split_input(stru_v);
 		if (stru_v->command[0] != NULL)
@@ -57,6 +67,8 @@ int loop(struct_v *stru_v)
 		if (child == 0)
 			_exeve(stru_v);
 		wait(&status);
+		if (stru_v->accs_fail == 0)
+			command_not_found(stru_v);
 	}
 	return (status);
 }
