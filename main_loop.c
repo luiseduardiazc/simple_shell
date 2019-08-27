@@ -49,7 +49,12 @@ int loop(struct_v *stru_v)
 			break;
 
 		if (_strcmp(stru_v->input, "\n") == 0)
-			continue;
+		{
+			if (is_interactive_mode)
+				continue;
+			else
+				break;
+		}
 
 		split_input(stru_v);
 		if (stru_v->command[0] != NULL)
@@ -67,8 +72,9 @@ int loop(struct_v *stru_v)
 		if (child == 0)
 			_exeve(stru_v);
 		wait(&status);
-		if (stru_v->accs_fail == 0)
+		/* if (stru_v->accs_fail == 0)
 			command_not_found(stru_v);
+		*/
 	}
 	return (status);
 }
