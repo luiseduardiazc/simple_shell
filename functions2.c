@@ -46,6 +46,11 @@ void tok_path(struct_v *stru_v)
 	return_path(stru_v);
 
 	_strcpy(path_copy, stru_v->path);
+	if (_strcmp(path_copy, "") == 0 && _access(stru_v->token) == 0)
+	{
+		stru_v->accs_fail = 1;
+		return;
+	}
 	stru_v->token_path = _strtok_r(path_copy, delim2, &ptr_safe_strtok);
 	while (stru_v->token_path != NULL)
 	{
