@@ -46,16 +46,29 @@ void tok_path(struct_v *stru_v)
 	return_path(stru_v);
 
 	_strcpy(path_copy, stru_v->path);
+	if (_strcmp(path_copy, "") == 0 && _access(stru_v->token) == 0)
+	{
+		stru_v->accs_fail = 1;
+		return;
+	}
 	stru_v->token_path = _strtok_r(path_copy, delim2, &ptr_safe_strtok);
-
 	while (stru_v->token_path != NULL)
 	{
 		comp = _strncmp(stru_v->token, stru_v->token_path, _strlen(stru_v->token_path));
 		if (comp != 0)
 		{
-			strcpy(stru_v->string, stru_v->token_path);
-			_strcat(stru_v->string, "/");
-			_strcat(stru_v->string, stru_v->token);
+			if (path_copy[0] == ':')
+			{
+				_strcpy(stru_v->string, "./");
+				_strcat(stru_v->string, stru_v->token);
+			}
+			else
+			{
+				_strcpy(stru_v->string, stru_v->token_path);
+				_strcat(stru_v->string, "/");
+				_strcat(stru_v->string, stru_v->token);
+			}
+
 			if (_access(stru_v->string) == 0)
 			{
 				stru_v->token = stru_v->string;
@@ -114,7 +127,6 @@ void _exeve(struct_v *stru_v)
 {
 	if (stru_v->accs_fail == 0)
 	{
-		printf("Error no encotnró path");
 		_exit(EXIT_SUCCESS);
 	}
 	if (stru_v->command[0] == NULL)
@@ -122,7 +134,7 @@ void _exeve(struct_v *stru_v)
 		_exit(EXIT_SUCCESS);
 	}
 
-	if (execve(stru_v->command[0], stru_v->command, NULL))
+	if (execve(stru_v->command[0], stru_v->command, stru_v->envp))
 	{
 		perror(stru_v->argv[0]);
 		_exit(EXIT_FAILURE);
