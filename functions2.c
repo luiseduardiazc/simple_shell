@@ -47,15 +47,23 @@ void tok_path(struct_v *stru_v)
 
 	_strcpy(path_copy, stru_v->path);
 	stru_v->token_path = _strtok_r(path_copy, delim2, &ptr_safe_strtok);
-
 	while (stru_v->token_path != NULL)
 	{
 		comp = _strncmp(stru_v->token, stru_v->token_path, _strlen(stru_v->token_path));
 		if (comp != 0)
 		{
-			strcpy(stru_v->string, stru_v->token_path);
-			_strcat(stru_v->string, "/");
-			_strcat(stru_v->string, stru_v->token);
+			if (path_copy[0] == ':')
+			{
+				_strcpy(stru_v->string, "./");
+				_strcat(stru_v->string, stru_v->token);
+			}
+			else
+			{
+				_strcpy(stru_v->string, stru_v->token_path);
+				_strcat(stru_v->string, "/");
+				_strcat(stru_v->string, stru_v->token);
+			}
+
 			if (_access(stru_v->string) == 0)
 			{
 				stru_v->token = stru_v->string;
