@@ -1,19 +1,5 @@
 #include "holberton.h"
 /**
- * alloc_memory_struct - alloc memory struct
- * Return: Nothing
- */
-struct_v *alloc_memory_struct()
-{
-	struct_v *stru_v;
-
-	stru_v = malloc(sizeof(struct_v));
-	if (!stru_v)
-		return (NULL);
-	return (stru_v);
-}
-
-/**
  * alloc_memory_property - alloc_memory_property
  * @property: The pointer to allocate memory
  *
@@ -38,7 +24,7 @@ char *alloc_memory_property(char *property)
  *
  * Description: This function initalize a structure
  * Return: Nothing
-*/
+ */
 void init_structure(struct_v *stru_v, char *argv[], char *envp[])
 {
 	stru_v->argv = argv;
@@ -57,7 +43,7 @@ void init_structure(struct_v *stru_v, char *argv[], char *envp[])
  *
  * Description: This function allocate memory for each property
  * Return: Nothing
-*/
+ */
 void _free(struct_v *stru_v)
 {
 	free(stru_v->command);
@@ -80,9 +66,12 @@ int main(int argc, char *argv[], char *envp[])
 {
 	int status = 0;
 	struct_v *stru_v = NULL;
-	(void)envp;
 	(void)argc;
-	stru_v = alloc_memory_struct();
+
+	stru_v = malloc(sizeof(struct_v));
+	if (!stru_v)
+		exit(EXIT_FAILURE);
+
 	init_structure(stru_v, argv, envp);
 	status = loop(stru_v);
 	_free(stru_v);
