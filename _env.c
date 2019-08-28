@@ -30,5 +30,6 @@ void _env(struct_v *stru_v)
 		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, mssg, _strlen(mssg));
 		write(STDOUT_FILENO, "\n", 1);
+		write(STDERR_FILENO, "2", 1);
 	}
 }
