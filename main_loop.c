@@ -17,7 +17,7 @@ void _print_prompt(int is_interactive_mode)
  *
  * Return: Nothing.
  * None Error
-*/
+ */
 void command_not_found(struct_v *stru_v)
 {
 	char error[1024];
@@ -71,10 +71,8 @@ int loop(struct_v *stru_v)
 		if (child == 0)
 			_exeve(stru_v);
 		wait(&status);
-		/**
-		* if (stru_v->accs_fail == 0)
-		*	command_not_found(stru_v);
-		 */
+		if (stru_v->accs_fail == 0)
+			command_not_found(stru_v);
 	}
 	return (status);
 }
