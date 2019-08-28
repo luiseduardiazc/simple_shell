@@ -69,12 +69,17 @@ $ echo "qwerty" | ./././hsh
 $
 ```
 
-## Commands
-    cat - prints and concatenates files to the standard output
-    cp -copies a file into another file
-    grep - helps to search for a file in a specific pattern
-    less - will let you go backward and forward in the files
-    ls - will list all files and directories in current working directory
-    mv - helps to move one file into another file
-    pwd - given you the current working directory
-    cd - change to directories
+## Useful Commands
+     
+  - [x] cat - prints and concatenates files to the standard output
+  - [x] cp -copies a file into another file
+  - [x] grep - helps to search for a file in a specific pattern
+  - [x] less - will let you go backward and forward in the files
+  - [x] ls - will list all files and directories in current working directory
+  - [x] mv - helps to move one file into another file
+  - [x] pwd - given you the current working directory
+  - [x] cd - change to directories
+
+ ## Authors
+| [Dionisio Arango](https://github.com/Dioni1195?tab=repositories) | [Luis Eduardo Diaz](https://github.com/luiseduardiazc?tab=repositories) |
+
