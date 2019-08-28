@@ -71,7 +71,7 @@ int loop(struct_v *stru_v)
 		if (line == (size_t)-1 && line == (size_t)EOF)
 			break;
 		if (_strcmp(stru_v->input, "exit\n") == 0)
-			break;
+			exit(EXIT_SUCCESS);
 		if (_strcmp(stru_v->input, "\n") == 0)
 		{
 			if (is_interactive_mode)
