@@ -29,6 +29,28 @@ void command_not_found(struct_v *stru_v)
 	write(STDOUT_FILENO, error, _strlen(error));
 }
 /**
+ * check_command - check_command
+ * @stru_v: The structure
+ *
+ * Return: An integer
+ */
+int check_command(struct_v *stru_v)
+{
+	int flag = 0;
+
+	if (_strcmp(stru_v->input, "cd") == 0)
+	{
+		if (to_cd(stru_v->command[1]) < 0)
+			perror(stru_v->command[1]);
+		flag = 1;
+	} else if (_strcmp(stru_v->input, "env") == 0)
+	{
+		_env(stru_v);
+		flag = 1;
+	}
+	return (flag);
+}
+/**
  * loop - loop for the prompt
  * @stru_v: The structure
  *
@@ -60,21 +82,13 @@ int loop(struct_v *stru_v)
 		split_input(stru_v);
 		if (stru_v->command[0] != NULL)
 		{
-			if (_strcmp(stru_v->command[0], "/bin/cd") == 0)
-			{
-				if (to_cd(stru_v->command[1]) < 0)
-					perror(stru_v->command[1]);
+			if (check_command(stru_v))
 				continue;
-			}
 		}
 		child = fork();
 		if (child == 0)
 			_exeve(stru_v);
 		wait(&status);
-		/**
-		* if (stru_v->accs_fail == 0)
-		*	command_not_found(stru_v);
-		*/
 	}
 	return (status);
 }
