@@ -1,10 +1,9 @@
 #ifndef HOLBERTON_H
 #define HOLBERTON_H
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 #include <stdlib.h>
 #define BUFERSIZE 4052
 #define delimiter " \t\n\r"
