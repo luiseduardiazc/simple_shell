@@ -21,7 +21,7 @@ char *alloc_memory_property(char *property)
  * @stru_v: The structure
  * @argv: The arguments passed by the user
  * @envp: The enviroment variables
- *
+ * @argc: The argc main
  * Description: This function initalize a structure
  * Return: Nothing
  */
