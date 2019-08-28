@@ -25,7 +25,7 @@ char *alloc_memory_property(char *property)
  * Description: This function initalize a structure
  * Return: Nothing
  */
-void init_structure(struct_v *stru_v, char *argv[], char *envp[])
+void init_structure(struct_v *stru_v, char *argv[], char *envp[], int argc)
 {
 	stru_v->argv = argv;
 	stru_v->envp = envp;
@@ -35,6 +35,7 @@ void init_structure(struct_v *stru_v, char *argv[], char *envp[])
 	stru_v->token_path = NULL;
 	stru_v->path = NULL;
 	stru_v->command = malloc(sizeof(char **) * 10);
+	stru_v->argc = argc;
 }
 
 /**
@@ -66,13 +67,12 @@ int main(int argc, char *argv[], char *envp[])
 {
 	int status = 0;
 	struct_v *stru_v = NULL;
-	(void)argc;
 
 	stru_v = malloc(sizeof(struct_v));
 	if (!stru_v)
 		exit(EXIT_FAILURE);
 
-	init_structure(stru_v, argv, envp);
+	init_structure(stru_v, argv, envp, argc);
 	status = loop(stru_v);
 	_free(stru_v);
 	exit(status);

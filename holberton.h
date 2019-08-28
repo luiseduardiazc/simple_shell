@@ -22,6 +22,7 @@
   * @command: Array of pointer to store the commands and pass to excev
   * @argv: The arguments passed by user
   * @envp: The enviroment variables
+  * @argc: Count of arguments
   *
   * Description: DS to storage all required variable to do a shell interpreter
   */
@@ -35,6 +36,7 @@ typedef struct struct_s
 	char *token_path;
 	char **command;
 	char **argv;
+	int argc;
 	char **envp;
 } struct_v;
 
