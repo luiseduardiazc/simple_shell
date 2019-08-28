@@ -15,5 +15,6 @@ void _env(struct_v *stru_v)
 	{
 		len = _strlen(stru_v->envp[i]);
 		write(STDOUT_FILENO, stru_v->envp[i], len);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
