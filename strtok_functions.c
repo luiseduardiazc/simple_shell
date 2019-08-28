@@ -10,7 +10,7 @@ int _strspn(const char *s1, const char *s2)
 {
 	int ret = 0;
 
-	while (*s1 && strchr(s2, *s1++))
+	while (*s1 && _strchr(s2, *s1++))
 		ret++;
 	return (ret);
 }
@@ -46,7 +46,7 @@ int _strcspn(const char *s1, const char *s2)
 
 	while (*s1)
 	{
-		if (strchr(s2, *s1))
+		if (_strchr(s2, *s1))
 			return (ret);
 
 		s1++, ret++;
