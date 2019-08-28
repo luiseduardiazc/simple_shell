@@ -115,10 +115,12 @@ void split_input(struct_v *stru_v)
  */
 void _exeve(struct_v *stru_v)
 {
-	if (stru_v->accs_fail == 0)
-	{
-		_exit(EXIT_SUCCESS);
-	}
+	/**
+	* if (stru_v->accs_fail == 0)
+	* {
+	*	_exit(EXIT_SUCCESS);
+	* }
+	*/
 	if (stru_v->command[0] == NULL)
 	{
 		_exit(EXIT_SUCCESS);

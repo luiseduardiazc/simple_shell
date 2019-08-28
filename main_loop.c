@@ -71,8 +71,10 @@ int loop(struct_v *stru_v)
 		if (child == 0)
 			_exeve(stru_v);
 		wait(&status);
-		if (stru_v->accs_fail == 0)
-			command_not_found(stru_v);
+		/**
+		* if (stru_v->accs_fail == 0)
+		*	command_not_found(stru_v);
+		*/
 	}
 	return (status);
 }
