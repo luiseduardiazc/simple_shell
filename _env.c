@@ -24,12 +24,11 @@ void _env(struct_v *stru_v)
 	else
 	{
 		mssg = "No such file or directory";
-		write(STDIN_FILENO, "env", _strlen("env"));
-		write(STDIN_FILENO, ": ", 2);
-		write(STDIN_FILENO, stru_v->command[1], _strlen(stru_v->command[1]));
-		write(STDIN_FILENO, ": ", 2);
-		write(STDIN_FILENO, mssg, _strlen(mssg));
-		write(STDIN_FILENO, "\n", 1);
-		exit(2);
+		write(STDOUT_FILENO, "env", _strlen("env"));
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, stru_v->command[1], _strlen(stru_v->command[1]));
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, mssg, _strlen(mssg));
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
