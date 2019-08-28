@@ -72,5 +72,6 @@ char *_strtok_r(char *s, char *delim, char **context);
 int loop(struct_v *stru_v);
 
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+void _env(struct_v *stru_v);
 
 #endif
