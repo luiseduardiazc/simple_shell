@@ -59,9 +59,9 @@ $ echo "qwerty" | /bin/../bin/sh
 /bin/../bin/sh: 1: qwerty: not found
 $
 ```
-```sh
-Same error with your program hsh:
 
+### Same error with your program hsh:
+```sh
 $ echo "qwerty" | ./hsh
 ./hsh: 1: qwerty: not found
 $ echo "qwerty" | ./././hsh
@@ -70,7 +70,8 @@ $
 ```
 
 ## Useful Commands
-     
+
+  - [x] env - prints environment      
   - [x] cat - prints and concatenates files to the standard output
   - [x] cp -copies a file into another file
   - [x] grep - helps to search for a file in a specific pattern
