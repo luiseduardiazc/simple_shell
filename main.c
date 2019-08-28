@@ -1,7 +1,6 @@
 #include "holberton.h"
 /**
  * alloc_memory_struct - alloc memory struct
- * Description: This function allocate memory for structure
  * Return: Nothing
  */
 struct_v *alloc_memory_struct()
@@ -13,14 +12,17 @@ struct_v *alloc_memory_struct()
 		return (NULL);
 	return (stru_v);
 }
+
 /**
  * alloc_memory_property - alloc_memory_property
+ * @property: The pointer to allocate memory
+ *
  * Description: This function allocate memory for each property
  * Return: Nothing
  */
 char *alloc_memory_property(char *property)
 {
-	property = malloc(sizeof(char)* 100);
+	property = malloc(sizeof(char) * 100);
 	if (!property)
 	{
 		return (NULL);
@@ -28,6 +30,15 @@ char *alloc_memory_property(char *property)
 	return (property);
 }
 
+/**
+ * init_structure - Initialize a structure
+ * @stru_v: The structure
+ * @argv: The arguments passed by the user
+ * @envp: The enviroment variables
+ *
+ * Description: This function initalize a structure
+ * Return: Nothing
+*/
 void init_structure(struct_v *stru_v, char *argv[], char *envp[])
 {
 	stru_v->argv = argv;
@@ -40,15 +51,22 @@ void init_structure(struct_v *stru_v, char *argv[], char *envp[])
 	stru_v->command = malloc(sizeof(char **) * 10);
 }
 
+/**
+ * _free - Frees a structure
+ * @stru_v: The structure
+ *
+ * Description: This function allocate memory for each property
+ * Return: Nothing
+*/
 void _free(struct_v *stru_v)
 {
-
 	free(stru_v->command);
-        free(stru_v->input);
-        free(stru_v->token);
+	free(stru_v->input);
+	free(stru_v->token);
 	free(stru_v->string);
 	free(stru_v);
 }
+
 /**
  * main - entry point
  * @argv: Array of pointers to parameters

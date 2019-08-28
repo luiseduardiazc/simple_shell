@@ -6,12 +6,26 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
-#include <string.h>
 #define BUFERSIZE 4052
 #define delimiter " \t\n\r"
 #define delim2 ":"
 #define print_prompt write(STDIN_FILENO, "(: ", 3)
 
+
+/**
+  * struct struct_s - Struct that contain the variables to use
+  * @accs_fail: The flag to indicate if is neccesary the free
+  * @string: String to store the concatenation of the token and path
+  * @input: Th input of user
+  * @token: The token to separate the user input
+  * @path: The enviroment path
+  * @token_path: The token used to separate the path
+  * @command: Array of pointer to store the commands and pass to excev
+  * @argv: The arguments passed by user
+  * @envp: The enviroment variables
+  *
+  * Description: DS to storage all required variable to do a shell interpreter
+  */
 typedef struct struct_s
 {
 	int accs_fail;
@@ -41,6 +55,14 @@ int to_cd(char *path);
 void tok_path(struct_v *stru_v);
 void split_input(struct_v *stru_v);
 void _exeve(struct_v *stru_v);
+
+/* functions3.c */
+void concat_path_points(struct_v *stru_v);
+void concat_path_normal(struct_v *stru_v);
+void access_true(struct_v *stru_v);
+int _access(char *s);
+int _strcmp_tok(struct_v *stru_v);
+
 /* functions for _strtok */
 int _strspn(const char *s1, const char *s2);
 char *_strrchr(char *s, int c);
