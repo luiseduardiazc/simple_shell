@@ -71,7 +71,7 @@ char *_strchr(const char *s, int c)
 /**
  * _strtok_r - function is a reentrant version strtok()
  * @s: The string to split
- * @delim: The string to delimit s
+ * @delimi: The string to delimit s
  * @context: The saveptr argument
  * Return: functions return a pointer to the next token or NULL
  */

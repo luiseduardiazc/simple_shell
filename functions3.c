@@ -51,3 +51,18 @@ void access_true(struct_v *stru_v)
 	stru_v->token = stru_v->string;
 	stru_v->accs_fail = 1;
 }
+
+/**
+ * _strcmp_tok - Function that compare tokens
+ * @stru_v: The structure
+ *
+ * Return: On success nothing
+ * On error, -1.
+*/
+int _strcmp_tok(struct_v *stru_v)
+{
+	int cmp, len = _strlen(stru_v->token_path);
+
+	cmp = _strncmp(stru_v->token, stru_v->token_path, len);
+	return (cmp);
+}
