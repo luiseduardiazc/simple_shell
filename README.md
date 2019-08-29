@@ -1,5 +1,5 @@
 # Simple UNIX command interpreter.
-## DESCRIPTION
+## ABSTRACT
 A simple shell created for Holberton School project by [Dionisio Arango](https://github.com/Dioni1195?tab=repositories) & [Luis Eduardo Diaz](https://github.com/luiseduardiazc?tab=repositories) 
 
 ## QUICK START
@@ -13,9 +13,22 @@ run
 simple_shell [command_string | file]
 
 ## DESCRIPTION
-simple_shell is an sh-compatible command language interpreter that executes commands read from the standard input or from a file.
+simple_shell is an sh-compatible command language interpreter that executes commands readed from the standard input or from a file.
 It is the program that is running when the user runs gcc -Wall -Werror -Wextra -pedantic *.c -o hsh and runs the executable file, ./hsh. The simple_shell implements commands that can be typed directly to the running shell or can be put into a file and the file can be executed directly by the shell.
+
+##USAGE EXAMPLE
+When you compile the code you can enter commands in two ways:
+
+###Interactive mode
+First: Execute  the executable file  /.hsh
+Second : Then, the prompt is printed like this ":) ", and you can write the command next to the prompt.
+
+###Noninteractive mode
+You enter the command with echo and pipelines and next execute your file as following:
+echo "ls" | ./hsh
+
 ### List of allowed functions and system calls
+
 
     access (man 2 access)
     chdir (man 2 chdir)
