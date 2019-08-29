@@ -53,6 +53,20 @@ void _free(struct_v *stru_v)
 	free(stru_v->string);
 	free(stru_v);
 }
+/**
+ * sigintHandler - sigintHandler
+ * @sig_num: num of signal
+ *
+ * Description: program that does not terminate when Ctrl+C is pressed
+ * Return: Nothing
+ */
+void sigintHandler(int sig_num)
+{
+	(void)sig_num;
+
+	signal(SIGINT, sigintHandler);
+	fflush(stdout);
+}
 
 /**
  * main - entry point
@@ -73,6 +87,7 @@ int main(int argc, char *argv[], char *envp[])
 		exit(EXIT_FAILURE);
 
 	init_structure(stru_v, argv, envp, argc);
+	signal(SIGINT, sigintHandler);
 	status = loop(stru_v);
 	_free(stru_v);
 	exit(status);
