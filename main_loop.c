@@ -69,7 +69,7 @@ int loop(struct_v *stru_v)
 		_print_prompt(is_interactive_mode);
 		line = getline(&stru_v->input, &size, stdin);
 		if (line == (size_t)-1 && line == (size_t)EOF)
-			break;
+			exit(EXIT_SUCCESS);
 		if (_strcmp(stru_v->input, "exit\n") == 0)
 			exit(EXIT_SUCCESS);
 		if (_strcmp(stru_v->input, "\n") == 0)
